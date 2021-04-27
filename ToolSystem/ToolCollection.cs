@@ -1,10 +1,11 @@
+using System;
 namespace Assignment
 {
     class ToolCollection : iToolCollection
     {
         // An array storing the actual tools in the collection
         iTool[] tools;
-        
+
         // Access the numebr of tools
         public int Number => tools.Length;
 
@@ -12,8 +13,13 @@ namespace Assignment
         public void add(iTool tool)
         {
             var newTools = new iTool[Number + 1];
+            // Set the final tool in the new array to be the new one
+            // Since array access is O(1), there's no reason not to 
+            // set the values in any arbitrary order.
             newTools[newTools.Length - 1] = tool;
+            // Copy all other tools from the old array into the new one
             tools.CopyTo(newTools, 0);
+            // Reassign the tools array
             tools = newTools;
         }
 
@@ -23,22 +29,27 @@ namespace Assignment
             var newTools = new iTool[Number - 1];
             int insertionIndex = 0;
             foreach (var currentT in tools)
-            {
-                if (currentT != tool)
-                {
-                    newTools[insertionIndex] = currentT;
-                    insertionIndex++;
-                }
-            }
+                // If the tool isn't the deletion target - insert it into the new array.
+                if (currentT != tool) try
+                    {
+                        newTools[insertionIndex] = currentT;
+                        insertionIndex++;
+                    }
+                    // If none of the elements in the collection match the given tool, an attempt to insert outside the newTools' bounds will occur
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new ArgumentException(String.Format("{0} wasn't in the collection and therefore couldn't be removed.", tool.Name));
+                    }
+            // Reassign the tools array
             tools = newTools;
         }
 
         // Find if a specific tool is in the collection
         public bool search(iTool tool)
         {
-            foreach (var currentT in tools) {
+            foreach (var currentT in tools)
                 if (currentT == tool) return true;
-            }
+            // After going through all tools without any of them matching, that means that it isn't in the collection.
             return false;
         }
 

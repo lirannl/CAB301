@@ -9,13 +9,14 @@ namespace Assignment
         MemberCollection borrowers;
         public string Name { get => name; set => name = value; }
         public int Quantity { get => quantity; set => quantity = value; }
-        public int AvailableQuantity { get => quantity - borrowers.Number; set => throw new System.NotImplementedException(); }
-        public int NoBorrowings { get => borrowers.Number; set => throw new System.NotImplementedException(); }
+        public int AvailableQuantity { get => quantity - borrowers.Number; }
+        public int NoBorrowings { get => borrowers.Number; }
 
         public iMemberCollection GetBorrowers => borrowers;
 
         public void addBorrower(iMember member)
         {
+            if (AvailableQuantity <= 0) throw new OverflowException("Tool is unavailable");
             borrowers.add(member);
         }
 

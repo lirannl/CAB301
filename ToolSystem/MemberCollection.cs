@@ -153,19 +153,31 @@ namespace Assignment
 
         public bool search(iMember member)
         {
+            try {
+                get(member);
+                return true;
+            }
+            catch (IndexOutOfRangeException) {
+                return false;
+            }
+        }
+
+        // Get a member from the collection
+        public ref iMember get(iMember member)
+        {
             MemberNode target = new MemberNode(member);
             MemberNode head = root;
             while (head != null)
             {
                 // If the head is the right node
-                if (target.member == head.member) return true;
+                if (target.member == head.member) return ref head.member;
                 // Too far left
                 if (target < head) head = head.prev;
                 // Too far right
                 else head = head.next;
             }
             // There's nothing at that value's position
-            return false;
+            throw new IndexOutOfRangeException("Member not found in collection");
         }
 
         public iMember[] toArray()

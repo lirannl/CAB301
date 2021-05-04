@@ -47,10 +47,21 @@ namespace Assignment
         // Find if a specific tool is in the collection
         public bool search(iTool tool)
         {
-            foreach (var currentT in tools)
-                if (currentT == tool) return true;
+            try
+            {
+                get(tool);
+                return true;
+            }
+            catch (IndexOutOfRangeException) { return false; }
+        }
+
+        // Get a tool from the collection
+        public ref iTool get(iTool tool)
+        {
+            for (int i = 0; i < tools.Length; i++)
+                if (tools[i] == tool) return ref tools[i];
             // After going through all tools without any of them matching, that means that it isn't in the collection.
-            return false;
+            throw new IndexOutOfRangeException("Tool wasn't found in the collection.");
         }
 
         // Return the tools array

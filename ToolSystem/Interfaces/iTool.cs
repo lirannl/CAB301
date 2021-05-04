@@ -20,16 +20,14 @@ namespace Assignment
             set;
         }
 
-        int AvailableQuantity //get and set the quantity of this tool currently available to lend
+        int AvailableQuantity //get the quantity of this tool currently available to lend
         {
             get;
-            set;
         }
 
-        int NoBorrowings //get and set the number of times that this tool has been borrowed
+        int NoBorrowings //get the number of times that this tool has been borrowed
         {
             get;
-            set;
         }
 
         iMemberCollection GetBorrowers  //get all the members who are currently holding this tool

@@ -17,7 +17,7 @@ namespace Assignment
 
             public int CompareTo(MemberNode other)
             {
-                return member.ContactNumber.CompareTo(other.member.ContactNumber);
+                return ((Member)member).FullName.CompareTo(((Member)other.member).FullName);
             }
 
             public static bool operator <(MemberNode a, MemberNode b)

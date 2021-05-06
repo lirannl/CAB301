@@ -1,5 +1,7 @@
 using Interfaces;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Assignment
 {
@@ -7,6 +9,13 @@ namespace Assignment
     {
         ToolCollection tools = new ToolCollection();
         MemberCollection members = new MemberCollection();
+        Dictionary<string, int> freqs;
+
+        public LibrarySystem(ToolCollection tools, MemberCollection members)
+        {
+            freqs = new Dictionary<string, int>();
+        }
+
         public void add(iTool tool)
         {
             tools.add(tool);
@@ -34,6 +43,12 @@ namespace Assignment
             existingMember.addTool(existingTool);
             // Register that the tool has said member borrowing it
             existingTool.addBorrower(member);
+            // Register a record of the borrowing
+            {
+                if (freqs.ContainsKey(existingTool.Name))
+                    freqs[existingTool.Name]++;
+                else freqs.Add(existingTool.Name, 1);
+            }
         }
 
         public void delete(iTool tool)
@@ -56,30 +71,49 @@ namespace Assignment
         {
             members.delete(member);
         }
-
+        // Given a contact number, print all of the tools the member has
         public void display(string contactNumber)
         {
-            iMember existingMember = members.get(new Member());
+            iMember existingMember = members.get(new Member(null, null, contactNumber, null));
+            foreach (var toolName in existingMember.Tools)
+                Console.WriteLine(toolName);
         }
 
         public void displayTools(string toolType)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+            // Tool types?
         }
 
-        public void displayTopTHree()
+        public void displayTopThree()
         {
-            throw new System.NotImplementedException();
+            foreach (var topFreq in 
+                freqs.OrderBy(freq => freq.Value).Take(3))
+            {
+                Console.WriteLine(String.Format(
+                    "{0} has been borrowed a total of {1} times.",
+                    topFreq.Key, topFreq.Value
+                ));
+            }
         }
 
         public string[] listTools(iMember member)
         {
-            throw new System.NotImplementedException();
+            iMember existingMember = members.get(member);
+            return existingMember.Tools;
         }
 
         public void returnTool(iMember member, iTool tool)
         {
-            throw new System.NotImplementedException();
+            // Access existing member and tool
+            ref iMember existingMember = ref members.get(member);
+            ref iTool existingTool = ref tools.get(tool);
+
+            if (!existingMember.Tools.Contains(existingTool.Name))
+                throw new KeyNotFoundException();
+            existingMember.deleteTool(existingTool);
+            existingTool.deleteBorrower(existingMember);
+
         }
     }
 }

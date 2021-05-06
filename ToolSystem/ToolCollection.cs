@@ -6,6 +6,11 @@ namespace Assignment
         // An array storing the actual tools in the collection
         iTool[] tools;
 
+        public ToolCollection()
+        {
+            this.tools = new iTool[0];
+        }
+
         // Access the numebr of tools
         public int Number => tools.Length;
 

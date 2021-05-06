@@ -7,6 +7,14 @@ namespace Assignment
         string name;
         int quantity;
         MemberCollection borrowers;
+
+        public Tool(string name, int quantity)
+        {
+            this.name = name;
+            this.quantity = quantity;
+            this.borrowers = new MemberCollection();
+        }
+
         public string Name { get => name; set => name = value; }
         public int Quantity { get => quantity; set => quantity = value; }
         public int AvailableQuantity { get => quantity - borrowers.Number; }

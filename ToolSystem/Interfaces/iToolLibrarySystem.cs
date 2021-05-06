@@ -27,7 +27,7 @@ namespace Interfaces
 
         string[] listTools(iMember member); //get a list of tools that are currently held by a given member
 
-        void displayTopTHree(); //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
+        void displayTopThree(); //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
 
 
     }

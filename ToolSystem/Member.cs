@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 namespace Assignment {
     class Member : iMember
@@ -14,12 +15,15 @@ namespace Assignment {
             this.lastName = lastName;
             this.number = number;
             this.pin = pin;
+            this.borrowed = new ToolCollection();
         }
 
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public string ContactNumber { get => number; set => number = value; }
         public string PIN { get => pin; set => pin = value; }
+
+        public string FullName { get => LastName + FirstName; }
 
         public string[] Tools => borrowed.toArray().Select(tool => tool.Name).ToArray();
 
@@ -33,6 +37,20 @@ namespace Assignment {
             borrowed.delete(tool);
         }
 
-        public static bool operator==(iTool first, iTool second) =>
+        // Two members are equal if they have the same contact number
+        public override bool Equals(object obj)
+        {
+            return obj is Member member &&
+                   ContactNumber == member.ContactNumber;
+        }
+
+        public static bool operator==(Member first, iMember second) =>
+            first.Equals(second);
+        
+        public static bool operator!=(Member first, iMember second) =>
+            !first.Equals(second);
+
+        public override int GetHashCode() =>
+            GetHashCode();
     }
 }

@@ -13,8 +13,9 @@
             "program": "${workspaceFolder}/ToolSystem/bin/Debug/net5.0/CAB301.dll",
             "args": [],
             "cwd": "${workspaceFolder}/ToolSystem",
+            "internalConsoleOptions": "neverOpen",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {

@@ -54,17 +54,17 @@ namespace Assignment
         {
             try
             {
-                get(tool);
+                get(tool.Name);
                 return true;
             }
             catch (IndexOutOfRangeException) { return false; }
         }
 
         // Get a tool from the collection
-        public ref iTool get(iTool tool)
+        public ref iTool get(string name)
         {
             for (int i = 0; i < tools.Length; i++)
-                if (tools[i] == tool) return ref tools[i];
+                if (tools[i].Name == name) return ref tools[i];
             // After going through all tools without any of them matching, that means that it isn't in the collection.
             throw new IndexOutOfRangeException("Tool wasn't found in the collection.");
         }

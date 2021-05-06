@@ -2,15 +2,16 @@ using System;
 using static Assignment.Utils;
 
 namespace Assignment {
+    using MenuOption = Tuple<string, Action<LibrarySystem>>;
     abstract class Menu {
-        public abstract Tuple<string, LibAction>[] options {
+        public abstract MenuOption[] options {
             get;
         }
         public abstract string name {
             get;
         }
         public bool main = false;
-        public void Run(ref LibrarySystem library)
+        public void Run(LibrarySystem library)
         {
             string initMessage = padString(name, '=', 10);
             string zeroAction;
@@ -64,7 +65,7 @@ namespace Assignment {
             } while(selection == -2);
             // If a non-exit has been selected, perform the selected action
             if (selection >= 0)
-                options[selection].Item2(ref library);
+                options[selection].Item2(library);
             else if (main) Environment.Exit(0);
         }
     }

@@ -42,11 +42,11 @@ namespace Assignment {
             borrowed.delete(tool);
         }
 
-        // Two members are equal if they have the same contact number
+        // Two members are equal if they have the same full name
         public override bool Equals(object obj)
         {
             return obj is Member member &&
-                   ContactNumber == member.ContactNumber;
+                   FullName == member.FullName;
         }
 
         public static bool operator==(Member first, iMember second) =>

@@ -74,7 +74,7 @@ namespace Assignment
         {
             MemberNode newNode = new MemberNode(member);
             if (root == null) root = newNode;
-            insertNode(newNode, ref root);
+            else insertNode(newNode, ref root);
         }
         public void delete(iMember member)
         {
@@ -169,12 +169,12 @@ namespace Assignment
             MemberNode head = root;
             while (head != null)
             {
-                // If the head is the right node
-                if (target.member == head.member) return ref head.member;
                 // Too far left
                 if (target < head) head = head.prev;
                 // Too far right
-                else head = head.next;
+                else if (target > head) head = head.next;
+                // If the head is the right node
+                else return ref head.member;
             }
             // There's nothing at that value's position
             throw new IndexOutOfRangeException("Member not found in collection");

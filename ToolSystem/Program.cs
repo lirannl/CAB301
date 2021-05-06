@@ -1,5 +1,4 @@
 ﻿using System;
-using static Assignment.Utils;
 
 namespace Assignment
 {

@@ -1,15 +1,15 @@
 using System;
 using static Assignment.Utils;
 
-namespace Assignment {
+namespace Assignment 
+{
     using MenuOption = Tuple<string, Action<LibrarySystem>>;
-    abstract class Menu {
-        public abstract MenuOption[] options {
-            get;
-        }
-        public abstract string name {
-            get;
-        }
+    abstract class Menu 
+    {
+        public abstract MenuOption[] options 
+        { get; }
+        public abstract string name 
+        { get; }
         public bool main = false;
         public void Run(LibrarySystem library)
         {

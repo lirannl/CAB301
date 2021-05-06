@@ -1,6 +1,7 @@
 using System;
 
 namespace Assignment {
+    class OverBorrowedException : Exception {};
     static class Utils {
         // Given a string, pad it on both sides equally
         public static string padString(string input, char padding, int n)

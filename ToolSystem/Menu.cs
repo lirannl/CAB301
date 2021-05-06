@@ -10,7 +10,7 @@ namespace Assignment {
             get;
         }
         public bool main = false;
-        public bool Run(ref LibrarySystem library)
+        public void Run(ref LibrarySystem library)
         {
             string initMessage = padString(name, '=', 10);
             string zeroAction;
@@ -64,11 +64,8 @@ namespace Assignment {
             } while(selection == -2);
             // If a non-exit has been selected, perform the selected action
             if (selection >= 0)
-            {
                 options[selection].Item2(ref library);
-                return false;
-            }
-            return main;
+            else if (main) Environment.Exit(0);
         }
     }
 }

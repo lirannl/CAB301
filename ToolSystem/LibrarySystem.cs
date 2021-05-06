@@ -11,6 +11,12 @@ namespace Assignment
         MemberCollection members = new MemberCollection();
         Dictionary<string, int> freqs;
 
+        public Member GetMember(string FullName)
+        {
+            ref iMember member = ref members.get(FullName);
+            return member as Member;
+        }
+
         public LibrarySystem(ToolCollection tools, MemberCollection members)
         {
             freqs = new Dictionary<string, int>();

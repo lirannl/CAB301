@@ -154,7 +154,7 @@ namespace Assignment
         public bool search(iMember member)
         {
             try {
-                get(member);
+                get(((Member)member).FullName);
                 return true;
             }
             catch (IndexOutOfRangeException) {
@@ -163,9 +163,9 @@ namespace Assignment
         }
 
         // Get a member from the collection
-        public ref iMember get(iMember member)
+        public ref iMember get(string fullName)
         {
-            MemberNode target = new MemberNode(member);
+            MemberNode target = new MemberNode(new Member(fullName));
             MemberNode head = root;
             while (head != null)
             {

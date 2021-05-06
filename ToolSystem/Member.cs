@@ -17,6 +17,11 @@ namespace Assignment {
             this.pin = pin;
             this.borrowed = new ToolCollection();
         }
+        // Dummy member - must never be inserted into a collection
+        public Member(string fullName)
+        {
+            this.lastName = fullName;
+        }
 
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }

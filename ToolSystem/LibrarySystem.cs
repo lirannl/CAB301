@@ -7,7 +7,7 @@ namespace Assignment
 {
     class LibrarySystem : iToolLibrarySystem
     {
-        ToolCollection tools = new ToolCollection();
+        Dictionary<string, ToolCollection> tools = new Dictionary<string, ToolCollection>();
         MemberCollection members = new MemberCollection();
         Dictionary<string, int> freqs;
 
@@ -19,7 +19,20 @@ namespace Assignment
 
         public Tool GetTool(string name)
         {
-            iTool tool = tools.get(name);
+            iTool tool = null;
+            Exception exception = null;
+            foreach (var category in tools)
+            {
+                try {
+                    tool = category.Value.get(name);
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            }
+            if (tool == null)
+                throw exception;
             return tool as Tool;
         }
         public LibrarySystem(ToolCollection tools, MemberCollection members)
@@ -29,13 +42,17 @@ namespace Assignment
 
         public void add(iTool tool)
         {
-            tools.add(tool);
+            Console.Write("Please enter the tool's category: ");
+            var category = Console.ReadLine();
+            if (!tools.ContainsKey(category))
+                tools.Add(category, new ToolCollection());
+            tools[category].add(tool);
         }
 
         public void add(iTool tool, int amount)
         {
             if (amount <= 0) throw new ArgumentException("Amount must be a positive number");
-            ref iTool existingTool = ref tools.get(tool.Name);
+            iTool existingTool = GetTool(tool.Name);
             existingTool.Quantity += amount;
         }
 
@@ -46,7 +63,7 @@ namespace Assignment
 
         public void borrowTool(iMember member, iTool tool)
         {
-            ref iTool existingTool = ref tools.get(tool.Name);
+            iTool existingTool = GetTool(tool.Name);
             ref iMember existingMember = ref members.get(((Member)member).FullName);
             // If the member is already borrowing 3 tools, don't allow the borrowing to go through
             if (existingMember.Tools.Length >= 3) throw new OverBorrowedException();
@@ -64,13 +81,18 @@ namespace Assignment
 
         public void delete(iTool tool)
         {
-            tools.delete(tool);
+            Exception[] errors = new Exception[tools.Keys.Count];
+            foreach (var category in tools)
+            {
+                try {category.Value.delete(tool);}
+                catch {}
+            }
         }
 
         public void delete(iTool tool, int amount)
         {
             if (amount <= 0) throw new ArgumentException("Amount must be a positive number");
-            ref iTool existingTool = ref tools.get(tool.Name);
+            iTool existingTool = GetTool(tool.Name);
             if (existingTool.AvailableQuantity < amount)
                 throw new ArgumentException(String.Format(
                     "Cannot remove {0} pieces of the tool, only {1} are available right now.",
@@ -98,8 +120,16 @@ namespace Assignment
 
         public void displayTools(string toolType)
         {
-            throw new NotImplementedException();
-            // Tool types?
+            try {
+                foreach(var tool in tools[toolType].toArray())
+                {
+                    Console.WriteLine(tool.Name);
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                Console.WriteLine("There are no tools of this type.");
+            }
         }
 
         public void displayTopThree()
@@ -124,7 +154,7 @@ namespace Assignment
         {
             // Access existing member and tool
             ref iMember existingMember = ref members.get(((Member)member).FullName);
-            ref iTool existingTool = ref tools.get(tool.Name);
+            iTool existingTool = GetTool(tool.Name);
 
             if (!existingMember.Tools.Contains(existingTool.Name))
                 throw new KeyNotFoundException();

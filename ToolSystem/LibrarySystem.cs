@@ -134,9 +134,9 @@ namespace Assignment
             // On the borrowings
             var sortedTopBorrowings = freqs
             // Sort them
-                .CustomSortBy(borrowing => borrowing.Value)
+                .CustomSortBy(borrowing => borrowing.Value, true)
             // Take the top 3 results
-            .Take(3);
+                .Take(3);
 
             // If less than 3 tools will be printed, explain why
             if (sortedTopBorrowings.Count() < 3) 

@@ -5,7 +5,7 @@ namespace Assignment
 {
     class MemberCollection : iMemberCollection
     {
-        class MemberNode : IComparable<MemberNode>
+        internal class MemberNode : IComparable<MemberNode>
         {
             public Member member;
             public MemberNode prev = null;
@@ -29,7 +29,7 @@ namespace Assignment
                 return a.CompareTo(b) > 0;
             }
         }
-        MemberNode root;
+        internal MemberNode root;
 
         public MemberCollection()
         {

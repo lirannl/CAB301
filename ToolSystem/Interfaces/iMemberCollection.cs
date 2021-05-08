@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Assignment
 {
     //The specification of MemberCollection ADT, which is used to store and manipulate a collection of members
-    
+
     interface iMemberCollection
     {
         int Number // get the number of members in the community library

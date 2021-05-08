@@ -1,9 +1,11 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAB301", "ToolSystem\CAB301.csproj", "{2BEEA42C-F681-4C58-A579-11C3C412FDEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{9F5E791C-374E-489A-B9C2-2CDCF80A55EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2BEEA42C-F681-4C58-A579-11C3C412FDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BEEA42C-F681-4C58-A579-11C3C412FDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BEEA42C-F681-4C58-A579-11C3C412FDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F5E791C-374E-489A-B9C2-2CDCF80A55EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F5E791C-374E-489A-B9C2-2CDCF80A55EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F5E791C-374E-489A-B9C2-2CDCF80A55EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F5E791C-374E-489A-B9C2-2CDCF80A55EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

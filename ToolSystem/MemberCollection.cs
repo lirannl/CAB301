@@ -7,10 +7,10 @@ namespace Assignment
     {
         class MemberNode : IComparable<MemberNode>
         {
-            public iMember member;
+            public Member member;
             public MemberNode prev = null;
             public MemberNode next = null;
-            public MemberNode(iMember member)
+            public MemberNode(Member member)
             {
                 this.member = member;
             }
@@ -72,7 +72,7 @@ namespace Assignment
         }
         public void add(iMember member)
         {
-            MemberNode newNode = new MemberNode(member);
+            MemberNode newNode = new MemberNode((Member)member);
             if (root == null) root = newNode;
             else insertNode(newNode, ref root);
         }
@@ -93,7 +93,7 @@ namespace Assignment
                 return;
             }
             // Deletion of some descendant
-            removeNode(new MemberNode(member), ref root);
+            removeNode(new MemberNode((Member)member), ref root);
         }
 
         // Given a non-max node, "delete" it
@@ -163,7 +163,7 @@ namespace Assignment
         }
 
         // Get a member from the collection
-        public ref iMember get(string fullName)
+        public Member get(string fullName)
         {
             MemberNode target = new MemberNode(new Member(fullName));
             MemberNode head = root;
@@ -174,7 +174,7 @@ namespace Assignment
                 // Too far right
                 else if (target > head) head = head.next;
                 // If the head is the right node
-                else return ref head.member;
+                else return head.member;
             }
             // There's nothing at that value's position
             throw new IndexOutOfRangeException("Member not found in collection");

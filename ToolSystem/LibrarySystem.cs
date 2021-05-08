@@ -2,6 +2,7 @@ using Interfaces;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using static Assignment.Utils;
 
 namespace Assignment
 {
@@ -64,7 +65,7 @@ namespace Assignment
         public void borrowTool(iMember member, iTool tool)
         {
             iTool existingTool = GetTool(tool.Name);
-            ref iMember existingMember = ref members.get(((Member)member).FullName);
+            iMember existingMember = members.get(((Member)member).FullName);
             // If the member is already borrowing 3 tools, don't allow the borrowing to go through
             if (existingMember.Tools.Length >= 3) throw new OverBorrowedException();
             // Register that the tool has said member borrowing it
@@ -99,12 +100,10 @@ namespace Assignment
                     amount, existingTool.AvailableQuantity));
             existingTool.Quantity -= amount;
         }
-
         public void delete(iMember member)
         {
             members.delete(member);
         }
-        // Given a contact number, print all of the tools the member has
         public void display(string contactNumber)
         {
             iMember existingMember = null;
@@ -117,7 +116,6 @@ namespace Assignment
             foreach (var toolName in existingMember.Tools)
                 Console.WriteLine(toolName);
         }
-
         public void displayTools(string toolType)
         {
             try {
@@ -131,19 +129,26 @@ namespace Assignment
                 Console.WriteLine("There are no tools of this type.");
             }
         }
-
         public void displayTopThree()
         {
-            foreach (var topFreq in 
-                freqs.OrderBy(freq => freq.Value).Take(3))
+            // On the borrowings
+            var sortedTopBorrowings = freqs
+            // Sort them
+                .CustomSortBy(borrowing => borrowing.Value)
+            // Take the top 3 results
+            .Take(3);
+
+            // If less than 3 tools will be printed, explain why
+            if (sortedTopBorrowings.Count() < 3) 
+                Console.WriteLine("Less than 3 tools have ever been borrowed, listing all tools.");
+            foreach (var borrowing in sortedTopBorrowings)
             {
                 Console.WriteLine(String.Format(
                     "{0} has been borrowed a total of {1} times.",
-                    topFreq.Key, topFreq.Value
+                    borrowing.Key, borrowing.Value
                 ));
             }
         }
-
         public string[] listTools(iMember member)
         {
             iMember existingMember = members.get(((Member)member).FullName);
@@ -153,7 +158,7 @@ namespace Assignment
         public void returnTool(iMember member, iTool tool)
         {
             // Access existing member and tool
-            ref iMember existingMember = ref members.get(((Member)member).FullName);
+            iMember existingMember = members.get(((Member)member).FullName);
             iTool existingTool = GetTool(tool.Name);
 
             if (!existingMember.Tools.Contains(existingTool.Name))

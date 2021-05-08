@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment {
     class OverBorrowedException : Exception {};
@@ -72,6 +74,35 @@ namespace Assignment {
                 }
             }
             return member;
+        }
+        // Given a (non-empty) list, remove and return the minimum item, based on the given critetia
+        static T PopMin<T>(this List<T> items, Func<T, IComparable> criteria)
+        {
+            // The current minimum is the beginning of the list
+            T min = items.First();
+            foreach (var item in items)
+            {
+                // If the current item is smaller than the current minimum,
+                // set the current minimum to the current item
+                if (criteria(min).CompareTo(criteria(item)) == -1)
+                    min = item;
+            }
+            // Current minimum will now the be minimum of the entire list
+            // Attempt to remove the minimum
+            if (!items.Remove(min))
+                throw new IndexOutOfRangeException();
+            return min;
+        }
+        // Perform a sorting algorithm on the given enumerable, returning a sorted enumerable
+        public static IEnumerable<T> CustomSortBy<T>(this IEnumerable<T> items, 
+            Func<T, IComparable> criteria)
+        {
+            List<T> unsortedItems = items.ToList();
+            // Insertion sort
+            for (int i = 0; i < items.Count(); i++)
+            {
+                yield return unsortedItems.PopMin(criteria);
+            }
         }
     }
 }

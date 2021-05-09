@@ -3,6 +3,7 @@ using Assignment;
 using static ExampleData.ExampleUsers;
 using static ExampleData.ExampleTools;
 using System.Collections.Generic;
+using System;
 
 namespace Tests
 {
@@ -108,6 +109,21 @@ namespace Tests
 
             // Try borrowing another
             Assert.Throws<OverBorrowedException>(() => library.borrowTool(Liran, Wire));
+        }
+        [Fact]
+        void OutOfToolTest()
+        {
+            // Add tool
+            library.addWithCategory(Scissors, "Default");
+
+            // Add members
+            library.add(Liran);
+            library.add(Jack);
+
+            // Borrow the one instance
+            library.borrowTool(Jack, Scissors);
+            // Try borrowing another
+            Assert.Throws<OverflowException>(() => library.borrowTool(Liran, Scissors));
         }
     }
 }

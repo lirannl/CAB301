@@ -11,6 +11,7 @@ namespace Assignment
         MemberCollection members = new MemberCollection();
         Dictionary<string, int> freqs;
         internal System.IO.TextReader Input = Console.In;
+        internal System.IO.TextWriter Output = Console.Out;
         public Member GetMember(string FullName)
         {
             iMember member = members.get(FullName);
@@ -43,7 +44,7 @@ namespace Assignment
         }
         public void add(iTool tool)
         {
-            Console.Write("Please enter the tool's category: ");
+            Output.Write("Please enter the tool's category: ");
             var category = Input.ReadLine();
             if (!tools.ContainsKey(category))
                 tools.Add(category, new ToolCollection());
@@ -109,7 +110,7 @@ namespace Assignment
             if (existingMember == null)
                 throw new IndexOutOfRangeException("Member with contact number not found.");
             foreach (var toolName in existingMember.Tools)
-                Console.WriteLine(toolName);
+                Output.WriteLine(toolName);
         }
         public void displayTools(string toolType)
         {
@@ -117,12 +118,12 @@ namespace Assignment
             {
                 foreach (var tool in tools[toolType].toArray())
                 {
-                    Console.WriteLine(tool.Name);
+                    Output.WriteLine(tool.Name);
                 }
             }
             catch (KeyNotFoundException)
             {
-                Console.WriteLine("There are no tools of this type.");
+                Output.WriteLine("There are no tools of this type.");
             }
         }
         public void displayTopThree()
@@ -136,10 +137,10 @@ namespace Assignment
 
             // If less than 3 tools will be printed, explain why
             if (sortedTopBorrowings.Count() < 3)
-                Console.WriteLine("Less than 3 tools have ever been borrowed, listing all tools.");
+                Output.WriteLine("Less than 3 tools have ever been borrowed, listing all tools.");
             foreach (var borrowing in sortedTopBorrowings)
             {
-                Console.WriteLine(String.Format(
+                Output.WriteLine(String.Format(
                     "{0} has been borrowed a total of {1} times.",
                     borrowing.Key, borrowing.Value
                 ));

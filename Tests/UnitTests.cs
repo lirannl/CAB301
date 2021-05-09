@@ -3,7 +3,6 @@ using Assignment;
 using static ExampleData.ExampleUsers;
 using static ExampleData.ExampleTools;
 using System.Collections.Generic;
-using System;
 
 namespace Tests
 {
@@ -30,6 +29,16 @@ namespace Tests
             Assert.Equal(3, members.Number);
         }
         [Fact]
+        void AddMembersToCollection02()
+        {
+            members.add(Jane);
+            members.add(James);
+            members.add(Dan);
+            members.add(Rachel);
+
+            Assert.Equal(4, members.Number);
+        }
+        [Fact]
         void TestSorting01()
         {
             members.add(Liran);
@@ -45,11 +54,12 @@ namespace Tests
             members.add(Dan);
             members.add(Rachel);
             members.add(Liran);
-
+            // Ensure that members were properly inserted
             Assert.NotNull(members.root.prev.next);
             Assert.NotNull(members.root.next);
         }
         [Fact]
+        // A test that involves both insertion, and removal of members
         void TestSorting03()
         {
             members.add(Jane);
@@ -111,19 +121,28 @@ namespace Tests
             Assert.Throws<OverBorrowedException>(() => library.borrowTool(Liran, Wire));
         }
         [Fact]
-        void OutOfToolTest()
+        void AnalyticsTest()
         {
-            // Add tool
+            // Add tools
+            library.addWithCategory(Chisel, "Default");
+            library.addWithCategory(Crayon, "Default");
             library.addWithCategory(Scissors, "Default");
+            library.addWithCategory(Wire, "Default");
+            library.addWithCategory(Rubber, "Default");
 
-            // Add members
+            // Add a member
             library.add(Liran);
-            library.add(Jack);
 
-            // Borrow the one instance
-            library.borrowTool(Jack, Scissors);
-            // Try borrowing another
-            Assert.Throws<OverflowException>(() => library.borrowTool(Liran, Scissors));
+            // Borrow tools
+            library.multiBorrow(Liran, Chisel, 10);
+            library.multiBorrow(Liran, Crayon, 4);
+            library.multiBorrow(Liran, Scissors, 3);
+            library.multiBorrow(Liran, Wire, 2);
+            library.multiBorrow(Liran, Rubber, 1);
+
+            // Allow reading the text output from the library
+            var Output = new System.IO.StringWriter();
+            library.Output = Output;
         }
     }
 }

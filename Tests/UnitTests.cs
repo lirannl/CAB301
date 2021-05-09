@@ -89,16 +89,25 @@ namespace Tests
             Assert.Equal(4, tools["Default"].Number);
         }
         [Fact]
-        void OverBorrow()
+        void OverBorrowTest()
         {
+            // Add tools
             library.addWithCategory(Chisel, "Default");
             library.addWithCategory(Crayon, "Default");
             library.addWithCategory(Scissors, "Default");
             library.addWithCategory(Wire, "Default");
             library.addWithCategory(Rubber, "Default");
 
+            // Add a member
+            library.add(Liran);
 
+            // Borrow the max number of items
+            library.borrowTool(Liran, Chisel);
+            library.borrowTool(Liran, Crayon);
+            library.borrowTool(Liran, Scissors);
+
+            // Try borrowing another
+            Assert.Throws<OverBorrowedException>(() => library.borrowTool(Liran, Wire));
         }
     }
 }
-

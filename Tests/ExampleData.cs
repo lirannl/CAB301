@@ -18,5 +18,6 @@ namespace ExampleData
         public static Tool Scissors = new Tool("Scissors", 1);
         public static Tool Crayon = new Tool("Crayon", 4);
         public static Tool Rubber = new Tool("Rubber", 4);
+        public static Tool Wire = new Tool("Wire", 2);
     }
 }

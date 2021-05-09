@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using Assignment;
 using static ExampleData.ExampleUsers;
@@ -7,14 +6,16 @@ using static ExampleData.ExampleTools;
 namespace Tests
 {
 
-    public class MemberTests
+    public class UnitTests
     {
-        public MemberTests()
+        public UnitTests()
         {
+            tools = new ToolCollection();
             members = new MemberCollection();
-            library = new LibrarySystem(new ToolCollection(), members);
+            library = new LibrarySystem(tools, members);
         }
         LibrarySystem library;
+        ToolCollection tools;
         MemberCollection members;
 
         [Fact]
@@ -75,6 +76,27 @@ namespace Tests
             library.add(Jane);
             Member member = library.GetMember(Jane.FullName);
             Assert.Equal(Jane, member);
+        }
+        [Fact]
+        void AddToolsToLibrary01()
+        {
+            library.addWithCategory(Chisel, "Default");
+            library.addWithCategory(Crayon, "Default");
+            library.addWithCategory(Scissors, "Default");
+            library.addWithCategory(Wire, "Default");
+
+            Assert.Equal(4, tools.Number);
+        }
+        [Fact]
+        void OverBorrow()
+        {
+            library.addWithCategory(Chisel, "Default");
+            library.addWithCategory(Crayon, "Default");
+            library.addWithCategory(Scissors, "Default");
+            library.addWithCategory(Wire, "Default");
+            library.addWithCategory(Rubber, "Default");
+
+
         }
     }
 }

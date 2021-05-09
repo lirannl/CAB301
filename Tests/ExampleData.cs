@@ -11,7 +11,6 @@ namespace ExampleData
         public static Member Jane => new Member("Jane", "Person", "0163", "1111");
         public static Member Jack => new Member("Jack", "Smith", "0513", "1111");
     }
-
     static class ExampleTools
     {
         public static Tool Chisel => new Tool("Chisel", 2);

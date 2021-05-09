@@ -2,7 +2,6 @@ using Interfaces;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using static Assignment.Utils;
 
 namespace Assignment
 {
@@ -11,20 +10,20 @@ namespace Assignment
         Dictionary<string, ToolCollection> tools = new Dictionary<string, ToolCollection>();
         MemberCollection members = new MemberCollection();
         Dictionary<string, int> freqs;
-
+        internal System.IO.TextReader Input = Console.In;
         public Member GetMember(string FullName)
         {
             iMember member = members.get(FullName);
             return member as Member;
         }
-
         public Tool GetTool(string name)
         {
             iTool tool = null;
             Exception exception = null;
             foreach (var category in tools)
             {
-                try {
+                try
+                {
                     tool = category.Value.get(name);
                 }
                 catch (Exception ex)
@@ -40,28 +39,24 @@ namespace Assignment
         {
             freqs = new Dictionary<string, int>();
         }
-
         public void add(iTool tool)
         {
             Console.Write("Please enter the tool's category: ");
-            var category = Console.ReadLine();
+            var category = Input.ReadLine();
             if (!tools.ContainsKey(category))
                 tools.Add(category, new ToolCollection());
             tools[category].add(tool);
         }
-
         public void add(iTool tool, int amount)
         {
             if (amount <= 0) throw new ArgumentException("Amount must be a positive number");
             iTool existingTool = GetTool(tool.Name);
             existingTool.Quantity += amount;
         }
-
         public void add(iMember member)
         {
             members.add(member);
         }
-
         public void borrowTool(iMember member, iTool tool)
         {
             iTool existingTool = GetTool(tool.Name);
@@ -79,17 +74,15 @@ namespace Assignment
                 else freqs.Add(existingTool.Name, 1);
             }
         }
-
         public void delete(iTool tool)
         {
             Exception[] errors = new Exception[tools.Keys.Count];
             foreach (var category in tools)
             {
-                try {category.Value.delete(tool);}
-                catch {}
+                try { category.Value.delete(tool); }
+                catch { }
             }
         }
-
         public void delete(iTool tool, int amount)
         {
             if (amount <= 0) throw new ArgumentException("Amount must be a positive number");
@@ -111,15 +104,16 @@ namespace Assignment
             {
                 if (member.ContactNumber == contactNumber) existingMember = member;
             }
-            if (existingMember == null) 
+            if (existingMember == null)
                 throw new IndexOutOfRangeException("Member with contact number not found.");
             foreach (var toolName in existingMember.Tools)
                 Console.WriteLine(toolName);
         }
         public void displayTools(string toolType)
         {
-            try {
-                foreach(var tool in tools[toolType].toArray())
+            try
+            {
+                foreach (var tool in tools[toolType].toArray())
                 {
                     Console.WriteLine(tool.Name);
                 }
@@ -139,7 +133,7 @@ namespace Assignment
                 .Take(3);
 
             // If less than 3 tools will be printed, explain why
-            if (sortedTopBorrowings.Count() < 3) 
+            if (sortedTopBorrowings.Count() < 3)
                 Console.WriteLine("Less than 3 tools have ever been borrowed, listing all tools.");
             foreach (var borrowing in sortedTopBorrowings)
             {
@@ -154,7 +148,6 @@ namespace Assignment
             iMember existingMember = members.get(((Member)member).FullName);
             return existingMember.Tools;
         }
-
         public void returnTool(iMember member, iTool tool)
         {
             // Access existing member and tool

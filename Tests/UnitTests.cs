@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace Tests
 {
-
     public class UnitTests
     {
         public UnitTests()
@@ -134,15 +133,23 @@ namespace Tests
             library.add(Liran);
 
             // Borrow tools
-            library.multiBorrow(Liran, Chisel, 10);
-            library.multiBorrow(Liran, Crayon, 4);
-            library.multiBorrow(Liran, Scissors, 3);
             library.multiBorrow(Liran, Wire, 2);
+            library.multiBorrow(Liran, Chisel, 10);
+            library.multiBorrow(Liran, Scissors, 3);
             library.multiBorrow(Liran, Rubber, 1);
+            library.multiBorrow(Liran, Crayon, 4);
 
             // Allow reading the text output from the library
-            var Output = new System.IO.StringWriter();
-            library.Output = Output;
+            var OutputTarget = new System.IO.StringWriter();
+            library.Output = OutputTarget;
+            library.displayTopThree();
+            var output = OutputTarget.ToString().TrimEnd().Split("\n");
+            // Ensure the borrowings show up in the right order
+            Assert.Equal(Chisel.Name, output[0].Split(" ")[0]);
+            Assert.Equal(Crayon.Name, output[1].Split(" ")[0]);
+            Assert.Equal(Scissors.Name, output[2].Split(" ")[0]);
+            // Ensure the output only has three lines
+            Assert.Throws<System.IndexOutOfRangeException>(() => output[3]);
         }
     }
 }

@@ -2,6 +2,7 @@ using Xunit;
 using Assignment;
 using static ExampleData.ExampleUsers;
 using static ExampleData.ExampleTools;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -10,12 +11,12 @@ namespace Tests
     {
         public UnitTests()
         {
-            tools = new ToolCollection();
+            tools = new Dictionary<string, ToolCollection>();
             members = new MemberCollection();
             library = new LibrarySystem(tools, members);
         }
         LibrarySystem library;
-        ToolCollection tools;
+        Dictionary<string, ToolCollection> tools;
         MemberCollection members;
 
         [Fact]
@@ -85,7 +86,7 @@ namespace Tests
             library.addWithCategory(Scissors, "Default");
             library.addWithCategory(Wire, "Default");
 
-            Assert.Equal(4, tools.Number);
+            Assert.Equal(4, tools["Default"].Number);
         }
         [Fact]
         void OverBorrow()

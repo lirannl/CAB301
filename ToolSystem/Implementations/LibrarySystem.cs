@@ -35,9 +35,11 @@ namespace Assignment
                 throw exception;
             return tool as Tool;
         }
-        public LibrarySystem(ToolCollection tools, MemberCollection members)
+        public LibrarySystem(Dictionary<string, ToolCollection> tools, MemberCollection members)
         {
             freqs = new Dictionary<string, int>();
+            this.members = members;
+            this.tools = tools;
         }
         public void add(iTool tool)
         {

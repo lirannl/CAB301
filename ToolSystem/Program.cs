@@ -13,10 +13,12 @@ namespace Assignment
             Console.Write("Enter pin: ");
             var pin = Console.ReadLine();
             Member member;
-            try {
+            try
+            {
                 member = library.GetMember(username);
             }
-            catch { 
+            catch
+            {
                 Console.WriteLine("\nLogin Failed.\n");
                 return;
             }
@@ -32,7 +34,7 @@ namespace Assignment
             Console.Write("Enter password: ");
             var password = Console.ReadLine();
             if (username == "staff" && password == "today123")
-            // If authentication is successful, go to the menu
+                // If authentication is successful, go to the menu
                 new StaffMenu().Run(library);
             else Console.WriteLine("\nLogin failed.\n");
         }
@@ -41,7 +43,7 @@ namespace Assignment
             new MenuOption("Member Login", MemberLogin)
         };
         public override MenuOption[] options => opts;
-        public MainMenu(){ this.main = true; }
+        public MainMenu() { this.main = true; }
     }
     class Program
     {
@@ -49,7 +51,10 @@ namespace Assignment
         {
             // Initialise the library system
             var prog = new Program();
-            var library = new LibrarySystem(new ToolCollection(), new MemberCollection());
+            var library = new LibrarySystem(
+                new System.Collections.Generic.Dictionary<string, ToolCollection>(),
+                new MemberCollection()
+            );
             // Greet the user
             Console.WriteLine("Welcome to the Tool Library");
             // Run the main menu in a loop

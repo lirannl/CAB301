@@ -13,7 +13,7 @@ namespace Tests
             tools = new Dictionary<string, ToolCollection>();
             members = new MemberCollection();
             library = new LibrarySystem(tools, members);
-            // Suppress console output, redirecting it nowhere by default
+            // Suppress console output from library class, redirecting it nowhere by default
             library.Output = new System.IO.StreamWriter(System.IO.Stream.Null);
         }
         LibrarySystem library;

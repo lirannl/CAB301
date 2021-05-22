@@ -109,7 +109,11 @@ namespace Assignment
             }
             if (existingMember == null)
                 throw new IndexOutOfRangeException("Member with contact number not found.");
-            foreach (var toolName in existingMember.Tools)
+            displayBorrowingTools(existingMember);
+        }
+        public void displayBorrowingTools(iMember aMember)
+        {
+            foreach (var toolName in aMember.Tools)
                 Output.WriteLine(toolName);
         }
         public void displayTools(string toolType)
